@@ -1,8 +1,6 @@
 package lexer
 
-import (
-	"github.com/kx0101/monkey-language/token"
-)
+import "github.com/kx0101/monkey-language/token"
 
 type Lexer struct {
 	input        string
@@ -27,17 +25,49 @@ func (l *Lexer) NextToken() token.Token {
 
 	switch l.char {
 	case '=':
-		tok = newToken(token.ASSIGN, l.char)
+		if l.peekChar() == '=' {
+			char := l.char
+			l.readChar()
+
+			tok = token.Token{
+				Type:    token.EQ,
+				Literal: string(char) + string(l.char),
+			}
+		} else {
+			tok = newToken(token.ASSIGN, l.char)
+		}
+	case '+':
+		tok = newToken(token.PLUS, l.char)
+	case '-':
+		tok = newToken(token.MINUS, l.char)
+	case '!':
+		if l.peekChar() == '=' {
+			char := l.char
+			l.readChar()
+
+			tok = token.Token{
+				Type:    token.NOT_EQ,
+				Literal: string(char) + string(l.char),
+			}
+		} else {
+			tok = newToken(token.BANG, l.char)
+		}
+	case '/':
+		tok = newToken(token.SLASH, l.char)
+	case '*':
+		tok = newToken(token.ASTERISK, l.char)
+	case '<':
+		tok = newToken(token.LT, l.char)
+	case '>':
+		tok = newToken(token.GT, l.char)
 	case ';':
 		tok = newToken(token.SEMICOLON, l.char)
+	case ',':
+		tok = newToken(token.COMMA, l.char)
 	case '(':
 		tok = newToken(token.LPAREN, l.char)
 	case ')':
 		tok = newToken(token.RPAREN, l.char)
-	case ',':
-		tok = newToken(token.COMMA, l.char)
-	case '+':
-		tok = newToken(token.PLUS, l.char)
 	case '{':
 		tok = newToken(token.LBRACE, l.char)
 	case '}':
@@ -62,6 +92,14 @@ func (l *Lexer) NextToken() token.Token {
 
 	l.readChar()
 	return tok
+}
+
+func (l *Lexer) peekChar() byte {
+	if l.readPosition >= len(l.input) {
+		return 0
+	} else {
+		return l.input[l.readPosition]
+	}
 }
 
 func (l *Lexer) readChar() {
