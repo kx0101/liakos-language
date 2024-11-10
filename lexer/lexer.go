@@ -79,6 +79,7 @@ func (l *Lexer) NextToken() token.Token {
 		if isLetter(l.char) {
 			tok.Literal = l.readIdentifier()
 			tok.Type = token.LookUpIdent(tok.Literal)
+
 			return tok
 		} else if isDigit(l.char) {
 			tok.Literal = l.readNumber()
