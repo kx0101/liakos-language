@@ -49,8 +49,8 @@ const (
 
 	LPAREN = "("
 	RPAREN = ")"
-	LBRACE = "["
-	RBRACE = "]"
+	LBRACE = "{"
+	RBRACE = "}"
 
 	FUNCTION = "FUNCTION"
 	LET      = "LET"
