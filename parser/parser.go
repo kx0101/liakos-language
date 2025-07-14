@@ -450,10 +450,10 @@ func (p *Parser) expectPeek(t token.TokenType) bool {
 		p.nextToken()
 
 		return true
-	} else {
-		p.peekError(t)
-		return false
 	}
+
+	p.peekError(t)
+	return false
 }
 
 func (p *Parser) registerPrefix(tokenType token.TokenType, fn prefixParseFns) {

@@ -37,11 +37,11 @@ func (p *Program) String() string {
 }
 
 func (p *Program) TokenLiteral() string {
-	if len(p.Statements) > 0 {
-		return p.Statements[0].TokenLiteral()
-	} else {
+	if len(p.Statements) <= 0 {
 		return ""
 	}
+
+	return p.Statements[0].TokenLiteral()
 }
 
 type LetStatement struct {
@@ -107,11 +107,11 @@ type ExpressionStatement struct {
 }
 
 func (es *ExpressionStatement) String() string {
-	if es.Expression != nil {
-		return es.Expression.String()
+	if es.Expression == nil {
+		return ""
 	}
 
-	return ""
+	return es.Expression.String()
 }
 
 func (es *ExpressionStatement) statementNode()       {}
