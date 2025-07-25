@@ -3,9 +3,9 @@ package evaluator
 import (
 	"testing"
 
-	"github.com/kx0101/monkey-language/lexer"
-	"github.com/kx0101/monkey-language/object"
-	"github.com/kx0101/monkey-language/parser"
+	"github.com/kx0101/liakos-language/lexer"
+	"github.com/kx0101/liakos-language/object"
+	"github.com/kx0101/liakos-language/parser"
 )
 
 func testEval(input string) object.Object {

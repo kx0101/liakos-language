@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/kx0101/monkey-language/ast"
+	"github.com/kx0101/liakos-language/ast"
 )
 
 type ObjectType string

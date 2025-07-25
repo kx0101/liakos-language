@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"strings"
 
-	"github.com/kx0101/monkey-language/token"
+	"github.com/kx0101/liakos-language/token"
 )
 
 type Node interface {

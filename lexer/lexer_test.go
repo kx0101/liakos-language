@@ -3,7 +3,7 @@ package lexer
 import (
 	"testing"
 
-	"github.com/kx0101/monkey-language/token"
+	"github.com/kx0101/liakos-language/token"
 )
 
 func TestNextToken(t *testing.T) {
