@@ -3,6 +3,7 @@ package object
 import (
 	"bytes"
 	"fmt"
+	"hash/fnv"
 	"strings"
 
 	"github.com/kx0101/liakos-language/ast"
@@ -25,17 +26,20 @@ const (
 	STRING_OBJ       = "STRING"
 	BUILTIN_OBJ      = "BUILTIN"
 	ARRAY_OBJ        = "ARRAY"
+	HASH_OBJ         = "HASH"
 )
 
 type Integer struct {
-	Value int64
+	Value      int64
+	hashKeyVal *HashKey
 }
 
 func (i *Integer) Type() ObjectType { return INTEGER_OBJ }
 func (i *Integer) Inspect() string  { return fmt.Sprintf("%d", i.Value) }
 
 type Boolean struct {
-	Value bool
+	Value      bool
+	hashKeyVal *HashKey
 }
 
 func (b *Boolean) Type() ObjectType { return BOOLEAN_OBJ }
@@ -86,7 +90,8 @@ func (f *Function) Inspect() string {
 }
 
 type String struct {
-	Value string
+	Value      string
+	hashKeyVal *HashKey
 }
 
 func (s *String) Type() ObjectType { return STRING_OBJ }
@@ -119,4 +124,78 @@ func (ao *Array) Inspect() string {
 	out.WriteString("]")
 
 	return out.String()
+}
+
+type HashKey struct {
+	Type  ObjectType
+	Value uint64
+}
+
+func (b *Boolean) HashKey() HashKey {
+	var value uint64
+
+	if b.Value {
+		value = 1
+	} else {
+		value = 0
+	}
+
+	hash := HashKey{Type: b.Type(), Value: value}
+	b.hashKeyVal = &hash
+
+	return hash
+}
+
+func (i *Integer) HashKey() HashKey {
+	if i.hashKeyVal != nil {
+		return *i.hashKeyVal
+	}
+
+	hash := HashKey{Type: i.Type(), Value: uint64(i.Value)}
+	i.hashKeyVal = &hash
+
+	return hash
+}
+
+func (s *String) HashKey() HashKey {
+	if s.hashKeyVal != nil {
+		return *s.hashKeyVal
+	}
+
+	h := fnv.New64a()
+	h.Write([]byte(s.Value))
+
+	hash := HashKey{Type: s.Type(), Value: h.Sum64()}
+	s.hashKeyVal = &hash
+
+	return hash
+}
+
+type HashPair struct {
+	Key   Object
+	Value Object
+}
+
+type Hash struct {
+	Pairs map[HashKey]HashPair
+}
+
+func (h *Hash) Type() ObjectType { return HASH_OBJ }
+func (h *Hash) Inspect() string {
+	var out bytes.Buffer
+
+	pairs := []string{}
+	for _, pair := range h.Pairs {
+		pairs = append(pairs, fmt.Sprintf("%s: %s", pair.Key.Inspect(), pair.Value.Inspect()))
+	}
+
+	out.WriteString("{")
+	out.WriteString(strings.Join(pairs, ", "))
+	out.WriteString("}")
+
+	return out.String()
+}
+
+type Hashable interface {
+	HashKey() HashKey
 }
