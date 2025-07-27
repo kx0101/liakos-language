@@ -1,3 +1,4 @@
+
 - **REPL (Read-Eval-Print Loop)**
 - **Primitive Types**: `int`, `bool`, `string`
 - **Data Structures**: Arrays (`[]`) & Hash maps (`{}`)
@@ -8,7 +9,7 @@
   - First-class & higher-order
   - Closures & lexical scoping
   - Recursion supported
-- **Built-in Functions**: e.g. `len()`, `first()`, `last()`, `push()`, `puts()`
+- **Built-in Functions**: e.g. `len()`, `first()`, `last()`, `push()`, `print()`
 - **Parser with Pratt Parsing** for correct operator precedence
 - **Error Handling** with informative messages
 - **Lexical Analyzer** (Tokenizer) and recursive descent parser
@@ -22,11 +23,18 @@ git clone https://github.com/kx0101/liakos-language.git
 cd liakos-language
 ```
 
-### 2. Run the REPL
+## REPL
 ```bash
 go run main.go
 
 >> let add = fn(a, b) { return a + b; };
 >> add(2, 3);
 5
+```
+
+## Run a File
+You can also execute `.liakos` source files:
+
+```bash
+./liakos examples/main.liakos
 ```

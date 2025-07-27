@@ -1,0 +1,45 @@
+let a = 5;
+let b = 10;
+let c = a + b;
+
+let add = fn(x, y) {
+    x + y;
+};
+
+let result = add(c, 20);
+
+let applyTwice = fn(f, x) {
+    f(f(x));
+};
+
+let increment = fn(x) {
+    x + 1;
+};
+
+let incResult = applyTwice(increment, 5);
+
+let makeAdder = fn(x) {
+    fn(y) { x + y; };
+};
+
+let addTwo = makeAdder(2);
+let closureResult = addTwo(3);
+
+let conditionTest = if (result > 30) {
+    "big";
+} else {
+    "small";
+};
+
+let arr = [1, 2, 3, 4];
+let secondElement = arr[1];
+
+let myMap = {"name": "Liakos", "age": 22};
+let nameValue = myMap["name"];
+
+result;
+incResult;
+closureResult;
+conditionTest;
+secondElement;
+nameValue;
