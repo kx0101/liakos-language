@@ -1,6 +1,10 @@
 package evaluator
 
-import "github.com/kx0101/liakos-language/object"
+import (
+	"fmt"
+
+	"github.com/kx0101/liakos-language/object"
+)
 
 var builtins = map[string]*object.BuiltIn{
 	"len": {
@@ -95,6 +99,15 @@ var builtins = map[string]*object.BuiltIn{
 			newElements[length] = args[1]
 
 			return &object.Array{Elements: newElements}
+		},
+	},
+	"print": {
+		Fn: func(args ...object.Object) object.Object {
+			for _, arg := range args {
+				fmt.Println(arg.Inspect())
+			}
+
+			return nil
 		},
 	},
 }
