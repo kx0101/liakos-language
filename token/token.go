@@ -62,5 +62,5 @@ const (
 	ELSE     = "ELSE"
 	RETURN   = "RETURN"
 	STRING   = "STRING"
-	COLON    = "."
+	COLON    = ":"
 )

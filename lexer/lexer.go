@@ -90,14 +90,16 @@ func (l *Lexer) NextToken() token.Token {
 			tok.Type = token.LookUpIdent(tok.Literal)
 
 			return tok
-		} else if isDigit(l.char) {
+		}
+
+		if isDigit(l.char) {
 			tok.Literal = l.readNumber()
 			tok.Type = token.INT
 
 			return tok
-		} else {
-			tok = newToken(token.ILLEGAL, l.char)
 		}
+
+		tok = newToken(token.ILLEGAL, l.char)
 	}
 
 	l.readChar()
